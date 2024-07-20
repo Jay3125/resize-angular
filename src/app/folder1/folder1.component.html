@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div
+      class="drop-list"
+      style="border-right: 1px solid #ccc; padding-right: 10px"
+      cdkDropList
+      (cdkDropListDropped)="onDrop($event)"
+      id="myArr1"
+      [cdkDropListConnectedTo]="['myArr2']"
+      [cdkDropListData]="myArr1"
+    >
+      <h4 class="title">{{ title1 }}</h4>
+      <div
+        *ngFor="let item of myArr1; let i = index"
+        cdkDrag
+        class="drop-item"
+        appResizable
+        style="display: flex; justify-content: space-between"
+        (click)="openEditor(item, i, myArr1)"
+      >
+        <div cdkDragHandle>
+          {{ item }}
+        </div>
+      </div>
+    </div>
+
+    <div
+      cdkDropList
+      id="myArr2"
+      [cdkDropListConnectedTo]="['myArr1']"
+      [cdkDropListData]="myArr2"
+      (cdkDropListDropped)="onDrop($event)"
+      class="drop-list"
+      style="
+        border-left: 1px solid #ccc;
+        padding-left: 10px;
+        margin-bottom: 15px;
+      "
+    >
+      <h4 class="title">{{ title2 }}</h4>
+      <div
+        *ngFor="let item of myArr2; let i = index"
+        cdkDrag
+        class="drop-item"
+        appResizable
+        style="display: flex; justify-content: space-between"
+        (click)="openEditor(item, i, myArr2)"
+      >
+        <div cdkDragHandle>
+          {{ item }}
+          <!-- <div [innerHTML]="item"></div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-container" *ngIf="showEditor">
+      <quill-editor #quillEditor [(ngModel)]="editorContent"></quill-editor>
+      <button (click)="saveEditorContent()">Save</button>
+      <button (click)="cancelEditor()">Cancel</button>
+    </div>
+  </div>
+</div>
