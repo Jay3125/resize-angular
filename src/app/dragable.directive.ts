@@ -3,6 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { EventEmitter } from 'stream';
 @Directive({
   selector: '[appDroppable]',
+  standalone:true
 })
 export class DroppableDirective {
   @HostListener('cdkDropListDropped', ['$event'])

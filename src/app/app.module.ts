@@ -27,8 +27,12 @@ import { TableModule } from './table/table.module';
       },
     }),
     QuillConfigModule.forRoot({
+      theme:'snow',
       modules: {
-        syntax:true
+        syntax:true,
+        toolbar: [
+          ['column-left'],
+        ]
       },
     }),
   ],

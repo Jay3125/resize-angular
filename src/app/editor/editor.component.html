@@ -1,7 +1,5 @@
 <div>
     <h3>Quill Editor with Table Support</h3>
-    <!-- <quill-editor [(ngModel)]="editorContent" [config]="quillConfig"></quill-editor> -->
-    <!-- <quill-editor [(ngModel)]="editorContent" [modules]="quillConfig" #editor></quill-editor> -->
-    <quill-editor #editor (onContentChanged)="onContentChanged($event)" [modules]="quillConfig"></quill-editor>
-
+    <quill-editor #editor [modules]="quillConfig" (onContentChanged)="onContentChanged($event)"></quill-editor>
+    <!-- <div [innerHTML]="sanitizedHtml"></div> -->
   </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -26,8 +26,9 @@ import { QuillEditorComponent } from 'ngx-quill';
     QuillEditorComponent,
   ],
 })
-export class Folder1Component {
-  @ViewChild('quillEditor') quillEditor!: QuillEditorComponent;
+export class Folder1Component implements OnInit {
+  ngOnInit(): void {}
+  @ViewChild('quillEditor') quillEditors!: QuillEditorComponent;
 
   constructor(private elementRef: ElementRef) {}
 
@@ -46,24 +47,26 @@ export class Folder1Component {
   selectedIndex!: number;
   selectedArray!: any[];
 
-  key = '';
+  lists: any[] = [];
 
-  // onDrop(event: CdkDragDrop<string[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   } else {
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  // }
+  countList: number = 0;
+
+  createNewList() {
+    const newList = {
+      id: this.lists.length + 1,
+      title: `Here Is Generated ${this.lists.length + 1} Show`,
+      data: [...this.myArr1], //here copy myArr1 all values in this data using Spread_Operator
+    };
+    this.lists.push(newList); // copy data into the lists array
+    this.countList++;
+    console.log("New List is Creted :)");
+    
+  }
+  removeNewList() {
+    this.lists.pop();
+    this.countList--;
+    console.log('Delete Button Call :(');
+  }
 
   onDrop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -80,24 +83,17 @@ export class Folder1Component {
         event.currentIndex
       );
     }
-    event.container.data.forEach((item, index) => {
+    event.container.data.forEach((index: any) => {
       event.container.data[index] =
-        this.quillEditor.quillEditor.root.innerText.trim();
+        // this.quillEditors.quillEditor.root.innerText.trim();
+        this.quillEditors.quillEditor.root.innerText;
     });
   }
 
-  // saveEditorContent() {
-  //   this.showEditor = false;
-  //   this.selectedArray[this.selectedIndex] = this.quillEditor.quillEditor
-  //     .getText()
-  //     .trim();
-
-  //   this.showEditor = false;
-  // }
   saveEditorContent() {
     this.showEditor = false;
     this.selectedArray[this.selectedIndex] =
-      this.quillEditor.quillEditor.root.innerText.trim();
+      this.quillEditors.quillEditor.root.innerText.trim();
 
     this.showEditor = false;
   }

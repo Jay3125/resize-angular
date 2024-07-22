@@ -1,62 +1,235 @@
-<div class="container">
+<div class="container p-4">
   <div class="row">
-    <div
-      class="drop-list"
-      style="border-right: 1px solid #ccc; padding-right: 10px"
-      cdkDropList
-      (cdkDropListDropped)="onDrop($event)"
-      id="myArr1"
-      [cdkDropListConnectedTo]="['myArr2']"
-      [cdkDropListData]="myArr1"
-    >
-      <h4 class="title">{{ title1 }}</h4>
+    <div class="col-lg-12">
       <div
-        *ngFor="let item of myArr1; let i = index"
-        cdkDrag
-        class="drop-item"
-        appResizable
-        style="display: flex; justify-content: space-between"
-        (click)="openEditor(item, i, myArr1)"
+        class="drop-list p-2 mb-1"
+        style="border-right: 1px solid #ccc; padding-right: 10px"
+        cdkDropList
+        (cdkDropListDropped)="onDrop($event)"
+        id="myArr1"
+        [cdkDropListConnectedTo]="[
+          'myArr2',
+          'myList1',
+          'myList2',
+          'myList4',
+          'myList5'
+        ]"
+        [cdkDropListData]="myArr1"
       >
-        <div cdkDragHandle>
-          {{ item }}
+        <div class="">
+          <h4 class="title">{{ title1 }}</h4>
+          <h5 style="padding-left: 15px">Count : {{ myArr1.length }}</h5>
+          <span
+            class="d-flex justify-content-center fw-bold"
+            *ngIf="myArr1.length === 0"
+            style="color: red"
+            >No List</span
+          >
+        </div>
+        <div
+          *ngFor="let item of myArr1; index as i"
+          cdkDrag
+          class="drop-item p-2"
+          appResizable
+          style="display: flex; justify-content: space-between"
+          (click)="openEditor(item, i, myArr1)"
+        >
+          <div cdkDragHandle>
+            Your ID :
+            <span class="text-primary">
+              {{ i + 1 }}
+            </span>
+            &nbsp;
+            {{ item }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        cdkDropList
+        id="myArr2"
+        [cdkDropListConnectedTo]="[
+          'myArr1',
+          'myList1',
+          'myList2',
+          'myList4',
+          'myList5'
+        ]"
+        [cdkDropListData]="myArr2"
+        (cdkDropListDropped)="onDrop($event)"
+        class="drop-list p-2"
+        style="
+          border-left: 1px solid #ccc;
+          padding-left: 10px;
+          margin-bottom: 15px;
+        "
+      >
+        <div class="">
+          <h4 class="title">{{ title2 }}</h4>
+          <h5 style="padding-left: 15px">Count : {{ myArr2.length }}</h5>
+          <span
+            class="d-flex justify-content-center fw-bold"
+            *ngIf="myArr2.length === 0"
+            style="color: red"
+            >No List</span
+          >
+        </div>
+        <div
+          *ngFor="let item of myArr2; let i = index"
+          cdkDrag
+          class="drop-item"
+          appResizable
+          style="display: flex; justify-content: space-between"
+          (click)="openEditor(item, i, myArr2)"
+        >
+          <div cdkDragHandle>
+            {{ item }}
+          </div>
+        </div>
+      </div>
+      <hr class="opacity-75 border-2 text-info bg-dark" />
+      <span class="text-danger fw-bold" *ngIf="countList != 0"
+        >New Create List {{ countList }}</span
+      >
+      <div>
+        <div *ngFor="let list of lists">
+          <div
+            cdkDropList
+            #listRef
+            [id]="'myList' + list.id"
+            [cdkDropListConnectedTo]="[
+              'myArr1',
+              'myArr2',
+              'myList1',
+              'myList2',
+              'myList3',
+              'myList4',
+              'myList5',
+              'myList' + list.id
+            ]"
+            [cdkDropListData]="list.data"
+            (cdkDropListDropped)="onDrop($event)"
+            class="drop-list p-2"
+            style="
+              border-left: 1px solid #ccc;
+              padding-left: 10px;
+              margin-bottom: 15px;
+            "
+          >
+            <div class="">
+              <h4 class="title">{{ list.title }}</h4>
+              <h5 style="padding-left: 15px">Count : {{ list.data.length }}</h5>
+              <span
+                class="d-flex justify-content-center fw-bold"
+                *ngIf="lists.length === 0"
+                style="color: red"
+                >No List</span
+              >
+            </div>
+            <div
+              *ngFor="let item of list.data; let i = index"
+              cdkDrag
+              class="drop-item"
+              appResizable
+              style="display: flex; justify-content: space-between"
+              (click)="openEditor(item, i, list.data)"
+            >
+              <div cdkDragHandle>
+                {{ item }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex">
+          <button
+            class="btn btn-primary mb-3 me-2"
+            (click)="createNewList()"
+            [disabled]="countList === 5"
+          >
+            Create New List <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </button>
+          <button
+            class="btn btn-danger mb-3 ms-2"
+            (click)="removeNewList()"
+            [disabled]="countList === 0"
+          >
+            Remove List
+          </button>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div
+          class="editor-container"
+          *ngIf="showEditor"
+          draggable="true"
+          appDroppable
+        >
+          <quill-editor #quillEditor [(ngModel)]="editorContent"></quill-editor>
+          <button (click)="saveEditorContent()">Save</button>
+          <button (click)="cancelEditor()">Cancel</button>
         </div>
       </div>
     </div>
 
-    <div
-      cdkDropList
-      id="myArr2"
-      [cdkDropListConnectedTo]="['myArr1']"
-      [cdkDropListData]="myArr2"
-      (cdkDropListDropped)="onDrop($event)"
-      class="drop-list"
-      style="
-        border-left: 1px solid #ccc;
-        padding-left: 10px;
-        margin-bottom: 15px;
-      "
-    >
-      <h4 class="title">{{ title2 }}</h4>
-      <div
-        *ngFor="let item of myArr2; let i = index"
-        cdkDrag
-        class="drop-item"
-        appResizable
-        style="display: flex; justify-content: space-between"
-        (click)="openEditor(item, i, myArr2)"
-      >
-        <div cdkDragHandle>
-          {{ item }}
-          <!-- <div [innerHTML]="item"></div> -->
+    <!-- <div class="row">
+      <div class="col-lg-8">
+        <div *ngFor="let list of lists">
+          <div
+            cdkDropList
+            #listRef
+            [id]="'myList' + list.id"
+            [cdkDropListConnectedTo]="[
+              'myArr1',
+              'myArr2',
+              'myList1',
+              'myList2',
+              'myList3',
+              'myList4',
+              'myList5',
+              'myList' + list.id
+            ]"
+            [cdkDropListData]="list.data"
+            (cdkDropListDropped)="onDrop($event)"
+            class="drop-list p-2"
+            style="
+              border-left: 1px solid #ccc;
+              padding-left: 10px;
+              margin-bottom: 15px;
+            "
+          >
+            <div class="">
+              <h4 class="title">{{ list.title }}</h4>
+              <h5 style="padding-left: 15px">Count : {{ list.data.length }}</h5>
+              <span
+                class="d-flex justify-content-center fw-bold"
+                *ngIf="lists.length === 0"
+                style="color: red"
+                >No List</span
+              >
+            </div>
+            <div
+              *ngFor="let item of list.data; let i = index"
+              cdkDrag
+              class="drop-item"
+              appResizable
+              style="display: flex; justify-content: space-between"
+              (click)="openEditor(item, i, list.data)"
+            >
+              <div cdkDragHandle>
+                {{ item }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="editor-container" *ngIf="showEditor">
-      <quill-editor #quillEditor [(ngModel)]="editorContent"></quill-editor>
-      <button (click)="saveEditorContent()">Save</button>
-      <button (click)="cancelEditor()">Cancel</button>
-    </div>
+    </div> -->
+    <!-- <div class="col-lg-4"> -->
+    <!-- <div class="editor-container" *ngIf="showEditor" draggable="true">
+        <quill-editor #quillEditor [(ngModel)]="editorContent"></quill-editor>
+        <button (click)="saveEditorContent()">Save</button>
+        <button (click)="cancelEditor()">Cancel</button>
+      </div> -->
+    <!-- </div> -->
   </div>
 </div>

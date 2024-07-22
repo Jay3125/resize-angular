@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  height: 100% !important;
+  /* height: 100% !important; */
   /* flex-direction: row; */
   /* position: sticky; */
   justify-content: space-around;
@@ -12,6 +12,7 @@
   max-width: 800px; /* adjust the max-width to your liking */
   margin: 0 auto;
   width: 100%;
+  max-height: 100px;
   justify-content: space-between;
 }
 .row > div:first-child {
@@ -82,16 +83,13 @@ h2 {
 }
 
 .editor-container {
-  padding: 20px;
-}
-
-.editor-container {
   position: absolute;
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 10px;
-  width: 790px;
+  /* width: 790px; */
   z-index: 1;
+  max-width: 800px;
   min-height: auto;
 }
 

@@ -1,9 +1,13 @@
 /* @import url('~quill/dist/quill.snow.css'); */
+@import url('../node_modules/bootstrap/dist/css/bootstrap.min.css');
 @import url('../node_modules//quill/dist//quill.snow.css');
-@import '../node_modules/quill/dist/quill.bubble.css';
-
+@import url('../node_modules/quill/dist/quill.bubble.css');
 
 /* .ql-editor {
     height: 300px;
     overflow-y: auto;
   } */
+
+body{
+  overflow-x: hidden;
+}
