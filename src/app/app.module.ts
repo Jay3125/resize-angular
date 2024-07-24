@@ -7,6 +7,7 @@ import { QuillConfigModule } from 'ngx-quill/config';
 import { EditorComponent } from './editor/editor.component';
 import { TableModule } from './table/table.module';
 
+
 // import {QuillEditorsComponentComponent} from './quill-editors.component/quill-editors.component.component'
 
 @NgModule({

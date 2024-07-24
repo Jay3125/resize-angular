@@ -11,6 +11,7 @@ import {  QuillEditorComponent, QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuillEditorsDirective } from './quill-editors.directive';
 import { EditorComponent } from "./editor/editor.component";
+import { MyTableComponent } from "./my-table/my-table.component";
 
 
 @Component({
@@ -28,7 +29,8 @@ import { EditorComponent } from "./editor/editor.component";
     ReactiveFormsModule,
     FormsModule,
     QuillEditorsDirective,
-    EditorComponent
+    EditorComponent,
+    MyTableComponent
 ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

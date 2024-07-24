@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col">
+      <select
+        id="column-visibility"
+        class="form-select"
+        [(ngModel)]="selectedColumn"
+        multiple
+      >
+        <option value="">Show All Columns</option>
+        <option *ngFor="let column of columns; let i = index" [value]="i">
+          {{ column }}
+        </option>
+      </select>
+      <div class="my-3 row">
+        <label for="search" class="col-sm-2 col-form-label">Search</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="search"
+            value=""
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+      </div>
+
+      <table
+        id="example"
+        class="display table table-hover table-striped"
+        style="width: 100%"
+      >
+        <thead>
+          <tr>
+            <th
+              *ngFor="let column of columns; let i = index"
+              [style.display]="getColumnDisplay(i)"
+            >
+              {{ column }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of filteredData">
+            <td
+              *ngFor="let cell of row; let i = index"
+              [style.display]="getColumnDisplay(i)"
+            >
+              {{ cell }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
